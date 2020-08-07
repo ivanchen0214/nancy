@@ -5,7 +5,7 @@ const serviceAccount = require("./permissions.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://learning-firebase-20200806.firebaseio.com"
+  databaseURL: ""
 });
 
 //- express

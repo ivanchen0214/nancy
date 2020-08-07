@@ -6,7 +6,7 @@ class Billing {
     this.price = price;
     this.description = description;
     this.createdDate = createdDate;
-    this.updatedDate =updatedDate;
+    this.updatedDate = updatedDate;
   }
 }
 
