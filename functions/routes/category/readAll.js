@@ -1,24 +1,25 @@
 const util = require('../../util');
+const Category = require('../../models/Category');
 
 module.exports = (app, db) => {
   app.get('/api/category', (req, res) => {
     (async () => {
       try {
-        let query = db.collection('categories');
+        const query = db.collection('categories');
         let response = [];
 
         await query.get().then(querySnapshot => {
-          let docs = querySnapshot.docs;
+          const docs = querySnapshot.docs;
 
           for (let doc of docs) {
-            const category = {
-              id: doc.data().id,
-              title: doc.data().title,
-              description: doc.data().description,
-              status: doc.data().status,
-              createdDate: doc.data().createdDate,
-              updatedDate: doc.data().updatedDate
-            };
+            const category = new Category(
+              doc.data().id,
+              doc.data().title,
+              doc.data().description,
+              doc.data().status,
+              doc.data().createdDate,
+              doc.data().updatedDate
+            );
 
             response.push(category);
           }

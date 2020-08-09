@@ -1,4 +1,5 @@
 const util = require('../../util');
+const Category = require('../../models/Category');
 
 module.exports = (app, db) => {
   app.get('/api/category/:id', (req, res) => {
@@ -7,10 +8,17 @@ module.exports = (app, db) => {
 
       try {
         const document = db.collection('categories').doc(categoryId);
-        let category = await document.get();
-        let response = category.data();
+        const doc = await document.get();
+        const category = new Category(
+          doc.data().id,
+          doc.data().title,
+          doc.data().description,
+          doc.data().status,
+          doc.data().createdDate,
+          doc.data().updatedDate
+        );
 
-        return util.apiResponse.success(res, response);
+        return util.apiResponse.success(res, category);
       } catch (error) {
         return util.apiResponse.error(res);
       }
