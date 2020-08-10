@@ -1,23 +1,24 @@
+const firebaseKey = require('firebase-key');
 const moment = require('moment');
+
 const util = require('../../util');
 
 module.exports = (app, db) => {
-  app.put('/api/category/:id', (req, res) => {
+  app.post('/api/user/create', (req, res) => {
     (async () => {
-      const categoryId = req.params.id;
+      const id = firebaseKey.key();
       const now = moment().unix();
 
-      var postData = {
-        title: req.body.title,
-        description: req.body.description,
-        status: req.body.status,
+      const postData = {
+        id,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        createdDate: now,
         updatedDate: now
       };
 
       try {
-        const document = db.collection('categories').doc(categoryId);
-        await document.update(postData);
-  
+        await db.collection('users').doc('/' + id + '/').create(postData);
         return util.apiResponse.success(res, postData);
       } catch (error) {
         return util.apiResponse.error(res);

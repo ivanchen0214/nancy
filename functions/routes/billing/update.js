@@ -20,7 +20,6 @@ module.exports = (app, db) => {
 
         return util.apiResponse.success(res, postData);
       } catch (error) {
-        console.log(error);
         return util.apiResponse.error(res);
       }
     })();
